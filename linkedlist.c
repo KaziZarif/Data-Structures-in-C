@@ -60,3 +60,24 @@ void list_delete(struct node** head, struct node* n) {
     temp->next = n->next;
     free(n);
 }
+
+struct node* list_next(struct node* n) {
+    if (n == NULL) {
+        return NULL;
+    }
+    return n->next;
+}
+
+void list_free(struct node** head) {
+    if (head == NULL || *head == NULL) {
+        return;
+    }
+    Node* temp = *head;
+    Node *next;
+    while (temp != NULL) {
+        next = temp->next;
+        free(temp);
+        temp = next;
+    }
+    *head = NULL;
+}
