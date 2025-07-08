@@ -38,5 +38,25 @@ void list_add(struct node** head, int value) {
         }
         temp->next = new_node;
     }
-}
+} 
 
+void list_delete(struct node** head, struct node* n) {
+    if (*head == NULL || n == NULL) {
+        return;
+    }
+
+    if (*head == n) {
+        *head = n->next;
+        free(n);
+        return;
+    }
+    Node* temp = *head;
+    while (temp != NULL && temp->next != n) {
+        temp = temp->next;
+    }
+    if (temp == NULL) {
+        return;
+    }
+    temp->next = n->next;
+    free(n);
+}
