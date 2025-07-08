@@ -81,3 +81,19 @@ void list_free(struct node** head) {
     }
     *head = NULL;
 }
+
+void list_reverse(struct node** head) {
+    if (head == NULL || *head == NULL) return;
+
+    Node* prev = NULL;
+    Node* current = *head;
+    Node* next = NULL;
+
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    *head = prev;
+}
