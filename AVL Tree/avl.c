@@ -10,3 +10,7 @@ typedef struct node {
 typedef struct tree {
     Node* root;
 } Tree;
+
+struct tree* avl_init(int value) {
+    
+}
