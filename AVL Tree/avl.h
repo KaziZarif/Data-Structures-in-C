@@ -6,13 +6,15 @@ typedef struct node {
     int height;
     struct node* left;
     struct node* right;
-} Node;
+} AvlNode;
 
 typedef struct tree {
-    Node* root;
+    AvlNode* root;
 } AvlTree;
 
 AvlTree* avl_init();
 void avl_insert(AvlTree* tree, int value);
 int avl_exists(AvlTree* tree, int target);
 void avl_destroy(AvlTree* tree);
+
+#endif 
