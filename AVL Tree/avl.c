@@ -45,7 +45,42 @@ struct avl_node* insert_node(AvlNode* node, int value) {
     }
 
     node->height = 1 + max(height(node->left), height(node->right));
+
     int balance = get_balance(node);
+
+    // Balance the tree. There are 4 cases
+    // Case 1: Left-Left  
+    if (balance > 1 && value < node->left->value) {
+        return rotate_right(node);
+    }
+
+    // Case 2: Right-Right
+    if (balance < -1 && value > node->right->value) {
+        return rotate_left(node);
+    }
+
+    // Case 3: Left-Right
+    if (balance > 1 && value > node->left->value) {
+        node->left = rotate_left(node->left);
+        return rotate_right(node);
+    }
+
+    // Case 4: Right-Left
+    if (balance < -1 && value < node->right->value) {
+        node->right = rotate_right(node->right);
+        return rotate_left(node);
+    }
+
+    return node;
+
+}
+
+struct avl_node* rotate_left(AvlNode* node) {
+
+}
+
+struct avl_node* rotate_right(AvlNode* node) {
+    
 }
 
 static int height(AvlNode* node) {
