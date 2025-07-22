@@ -123,3 +123,23 @@ static struct avl_node* rotate_right(AvlNode* node) {
     return new_root;
 }
 
+static int search_node(AvlNode* node, int target) {
+    if (node == NULL) {
+        return 0;
+    }
+    if (node->value == target) {
+        return 1;
+    } 
+    else if (target < node->value) {
+        return search_node(node->left, target);
+    } else {
+        return search_node(node->right, target);
+    }
+}
+
+int avl_exists(AvlTree* tree, int target) {
+    if (tree == NULL || tree->root == NULL) {
+        return 0;
+    }
+    return search_node(tree->root, target);
+}
