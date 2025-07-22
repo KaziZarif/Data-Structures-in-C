@@ -23,6 +23,20 @@ static int get_balance(AvlNode* node) {
     }
 }
 
+static int search_node(AvlNode* node, int target) {
+    if (node == NULL) {
+        return 0;
+    }
+    if (node->value == target) {
+        return 1;
+    } 
+    else if (target < node->value) {
+        return search_node(node->left, target);
+    } else {
+        return search_node(node->right, target);
+    }
+}
+
 
 // Tree functions 
 struct avl_tree* avl_init() {
@@ -123,19 +137,6 @@ static struct avl_node* rotate_right(AvlNode* node) {
     return new_root;
 }
 
-static int search_node(AvlNode* node, int target) {
-    if (node == NULL) {
-        return 0;
-    }
-    if (node->value == target) {
-        return 1;
-    } 
-    else if (target < node->value) {
-        return search_node(node->left, target);
-    } else {
-        return search_node(node->right, target);
-    }
-}
 
 int avl_exists(AvlTree* tree, int target) {
     if (tree == NULL || tree->root == NULL) {
@@ -143,3 +144,20 @@ int avl_exists(AvlTree* tree, int target) {
     }
     return search_node(tree->root, target);
 }
+
+static void destroy_node(AvlNode* node) {
+    if (node == NULL) {
+        return;
+    }
+
+    destroy_node(node->left);
+    destroy_node(node->right);
+    free(node);
+}
+
+void avl_destroy(AvlTree* tree) { 
+    if (tree == NULL || tree->root == NULL) return;
+    destroy_node(tree->root);
+    free(tree);
+}
+
