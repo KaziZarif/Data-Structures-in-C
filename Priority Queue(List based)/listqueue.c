@@ -13,3 +13,12 @@ ListQueue* queue_init() {
     new_queue->back = NULL;
     return new_queue;
 }
+
+bool queue_front(ListQueue* q, int* result) {
+    if (q == NULL || q->front == NULL || result == NULL) {
+        return false;
+    } 
+    *result = q->front->value;
+    return true;
+}
+

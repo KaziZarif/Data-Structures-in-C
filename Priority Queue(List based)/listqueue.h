@@ -15,7 +15,7 @@ typedef struct queue {
 
 
 ListQueue* queue_init();
-int queue_front(ListQueue* q);
+bool queue_front(ListQueue* q, int* result);
 void queue_enqueue(ListQueue* q, int value);
 bool queue_dequeue(ListQueue* q, int* result);
 bool queue_is_empty(ListQueue* q);
