@@ -2,7 +2,29 @@
 #include <stdio.h>
 #include "avl.h"
 
+// helper functions
+static int height(AvlNode* node) {
+    if (node != NULL) {
+        return node->height;
+    } else {
+        return -1;
+    }
+}
 
+static int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+static int get_balance(AvlNode* node) {
+    if (node != NULL) {
+        return height(node->left) - height(node->right);
+    } else {
+        return 0;
+    }
+}
+
+
+// Tree functions 
 struct avl_tree* avl_init() {
     AvlTree* tree = malloc(sizeof(AvlTree));
     if (tree == NULL) {
@@ -75,30 +97,29 @@ struct avl_node* insert_node(AvlNode* node, int value) {
 
 }
 
-struct avl_node* rotate_left(AvlNode* node) {
+static struct avl_node* rotate_left(AvlNode* node) {
+    AvlNode* new_root = node->right;
+    AvlNode* moved_subtree = new_root->left;
 
+    new_root->left = node;
+    node->right = moved_subtree;
+
+    node->height = 1 + max(height(node->left), height(node->right));
+    new_root->height = 1 + max(height(new_root->left), height(new_root->right));
+
+    return new_root;
 }
 
-struct avl_node* rotate_right(AvlNode* node) {
-    
+static struct avl_node* rotate_right(AvlNode* node) {
+    AvlNode* new_root = node->left;
+    AvlNode* moved_subtree = new_root->right;
+
+    new_root->right = node;
+    node->left = moved_subtree;
+
+    node->height = 1 + max(height(node->left), height(node->right));
+    new_root->height = 1 + max(height(new_root->left), height(new_root->right));
+
+    return new_root;
 }
 
-static int height(AvlNode* node) {
-    if (node != NULL) {
-        return node->height;
-    } else {
-        return -1;
-    }
-}
-
-static int max(int a, int b) {
-    return (a > b) ? a : b;
-}
-
-static int get_balance(AvlTree* node) {
-    if (node != NULL) {
-        return height(node->left) - height(node->right);
-    } else {
-        return 0;
-    }
-}
