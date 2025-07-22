@@ -1,5 +1,5 @@
-#ifndef LISTQUEUE_h
-#define LISTQUEUE_h
+#ifndef LISTQUEUE_H
+#define LISTQUEUE_H
 
 #include <stdbool.h>
 
@@ -14,7 +14,8 @@ typedef struct queue {
 } ListQueue;
 
 
-ListQueue* list_init();
+ListQueue* queue_init();
+int queue_front(ListQueue* q);
 void queue_enqueue(ListQueue* q, int value);
 bool queue_dequeue(ListQueue* q, int* result);
 bool queue_is_empty(ListQueue* q);
