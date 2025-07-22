@@ -34,14 +34,36 @@ struct avl_node* insert_node(AvlNode* node, int value) {
         new_node->height = 0;
         return new_node;
     }
-    else if (node->value == value) {
-        fprintf(stderr, "Value already exists in tree.\n");
-        return node;
-    }
     else if (value < node->value) {
         node->left = insert_node(node->left, value);
     } 
     else if (value > node->value) {
         node->right = insert_node(node->right, value);
+    } else {
+        fprintf(stderr, "Value already exists in tree.\n");
+        return node;
+    }
+
+    node->height = 1 + max(height(node->left), height(node->right));
+    int balance = get_balance(node);
+}
+
+static int height(AvlNode* node) {
+    if (node != NULL) {
+        return node->height;
+    } else {
+        return -1;
+    }
+}
+
+static int max(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+static int get_balance(AvlTree* node) {
+    if (node != NULL) {
+        return height(node->left) - height(node->right);
+    } else {
+        return 0;
     }
 }
