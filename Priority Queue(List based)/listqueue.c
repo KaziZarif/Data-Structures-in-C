@@ -57,3 +57,22 @@ bool queue_dequeue(ListQueue* q, int* result) {
     free(temp);
     return true;
 }
+
+
+bool queue_is_empty(ListQueue* q) {
+    if (q == NULL || q->front == NULL) return true;
+    return false;
+}
+
+// After calling queue_destroy(q), the caller must also call free(q)
+void queue_destroy(ListQueue* q) {
+    if (q == NULL) return;
+    Node* current = q->front;
+    while (current != NULL) {
+        Node* temp = current->next;
+        free(current);
+        current = temp;
+    }
+    q->front = NULL;
+    q->back = NULL;
+}
