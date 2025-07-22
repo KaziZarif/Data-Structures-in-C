@@ -22,7 +22,7 @@ bool queue_front(ListQueue* q, int* result) {
     return true;
 }
 
-void queue_enqueue(ListQueue* q, int value) {
+void queue_enqueue(ListQueue* q, int value, int priority) {
     if (q == NULL) return;
 
     Node* new_node = malloc(sizeof(Node));
@@ -31,13 +31,26 @@ void queue_enqueue(ListQueue* q, int value) {
         return;
     }
     new_node->value = value;
+    new_node->priority = priority;
     new_node->next = NULL;
 
-    if (q->front == NULL) {
+    if (q->front == NULL || priority < q->front->priority) {
+        new_node->next = q->front;
         q->front = new_node;
-        q->back = new_node;
-    } else {
-        q->back->next = new_node;
+        
+        if (q->back == NULL) {
+            q->back = new_node;
+        }
+        return;
+    } 
+
+    Node* current = q->front;
+    while (current->next != NULL && current->next->priority <= priority) {
+        current = current->next;
+    }
+    new_node->next = current->next;
+    current->next = new_node;
+    if (new_node->next == NULL) {
         q->back = new_node;
     }
 }
